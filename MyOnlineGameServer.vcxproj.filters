@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="NetRoot">
+      <UniqueIdentifier>{7d515bb6-5987-41ee-ab65-06e4b341a38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetRoot\NetServer">
+      <UniqueIdentifier>{9dfd12ad-89a6-4571-be87-dd78eb6623c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetRoot\LanClient">
+      <UniqueIdentifier>{e91bba1e-d6a9-4ac4-971a-80a2b374d1e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetRoot\LanServer">
+      <UniqueIdentifier>{26fa2cad-94bb-4f90-8f2e-9e484f8ada11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetRoot\Common">
+      <UniqueIdentifier>{a41380ca-5b25-464f-ae0f-7b7a8dfdd781}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameServer">
+      <UniqueIdentifier>{a27b6e90-ba7e-41b0-9b61-4ecac7f3861d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{16ac2b44-609d-47af-a79b-1b022f92b140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Objects">
+      <UniqueIdentifier>{6c3176b1-f6a3-4b38-b821-a23a23268b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameServer\Sector">
+      <UniqueIdentifier>{51db821c-6f43-4ba1-b4d3-db2df2d5b87d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameServer\AuthPipe">
+      <UniqueIdentifier>{ab4d72eb-00ec-4069-acec-2f4cf9429ddd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameServer\GamePipe">
+      <UniqueIdentifier>{6ccab409-437b-4bac-aa57-b7c74170fb43}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MyOnlineGameServer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\NetServer\NetServer.cpp">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\NetServer\NetSession.cpp">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\NetServer\NetSessionArray.cpp">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\NetServer\NetSessionID.cpp">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\NetServer\NetLargePacket.cpp">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\NetServer\NetPacket.cpp">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\NetServer\NetPacketSet.cpp">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\NetServer\NetPipe.cpp">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\Common\RingBuffer.cpp">
+      <Filter>NetRoot\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\Common\SizedMemoryPool.cpp">
+      <Filter>NetRoot\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\Common\SystemLogger.cpp">
+      <Filter>NetRoot\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\Common\Crash.cpp">
+      <Filter>NetRoot\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\Common\Parser.cpp">
+      <Filter>NetRoot\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\Common\PDHMonitor.cpp">
+      <Filter>NetRoot\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\Common\Profiler.cpp">
+      <Filter>NetRoot\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\LanServer\LanServer.cpp">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\LanServer\LanSession.cpp">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\LanServer\LanSessionArray.cpp">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\LanServer\LanSessionID.cpp">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\LanServer\LanLargePacket.cpp">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\LanServer\LanPacket.cpp">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\LanServer\LanPacketSet.cpp">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\LanServer\LanPipe.cpp">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ObjectManager.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlineGameServer\GameServer.cpp">
+      <Filter>GameServer</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Monster.cpp">
+      <Filter>Object\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Crystal.cpp">
+      <Filter>Object\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlineGameServer\AuthPipe.cpp">
+      <Filter>GameServer\AuthPipe</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlineGameServer\GamePipe.cpp">
+      <Filter>GameServer\GamePipe</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\LanClient\LanClient.cpp">
+      <Filter>NetRoot\LanClient</Filter>
+    </ClCompile>
+    <ClCompile Include="NetRoot\Common\DBConnector.cpp">
+      <Filter>NetRoot\Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NetRoot\NetServer\NetServer.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetSession.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetSessionArray.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetSessionID.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetStub.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetUser.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\PipeManager.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetDummyPacket.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetEnums.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetLargePacket.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetPacket.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetPacketSet.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\NetServer\NetPipe.h">
+      <Filter>NetRoot\NetServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\RingBuffer.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\RPCBuffer.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\Singleton.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\SizedMemoryPool.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\SizedMemTLS.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\SwapQueue.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\SystemLogger.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\ChunkLockFree.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\Crash.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\JobQueue.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\Lock.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\LockFreeEnqQueue.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\LockFreeQueue.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\LockFreeStack.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\MemTLS.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\MyList.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\MyMultimap.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\MyRedBlackTree.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\Parser.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\PDHMonitor.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\Profiler.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\Queue.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\QueueWithLock.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanClient\LanClient.h">
+      <Filter>NetRoot\LanClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanServer.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanSession.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanSessionArray.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanSessionID.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanUser.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanDummyPacket.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanEnums.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanLargePacket.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanPacket.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanPacketSet.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\LanServer\LanPipe.h">
+      <Filter>NetRoot\LanServer</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonProtocol.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Monster.h">
+      <Filter>Object\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Crystal.h">
+      <Filter>Object\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ObjectManager.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGameServer\GameClient.h">
+      <Filter>GameServer</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGameServer\GameServer.h">
+      <Filter>GameServer</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGameServer\PipePlayer.h">
+      <Filter>GameServer</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGameServer\UserMap.h">
+      <Filter>GameServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Sector\Sector.h">
+      <Filter>GameServer\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="Sector\SectorMap.h">
+      <Filter>GameServer\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BaseObject.h">
+      <Filter>Object\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGameServer\AuthPipe.h">
+      <Filter>GameServer\AuthPipe</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGameServer\AuthPipe_CS_Stub.h">
+      <Filter>GameServer\AuthPipe</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGameServer\AuthPipe_SC_Proxy.h">
+      <Filter>GameServer\AuthPipe</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGameServer\GamePipe.h">
+      <Filter>GameServer\GamePipe</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGameServer\GamePipe_CS_Stub.h">
+      <Filter>GameServer\GamePipe</Filter>
+    </ClInclude>
+    <ClInclude Include="TilePos.h">
+      <Filter>GameServer\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="DBSaveJob.h">
+      <Filter>GameServer</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineGameServer\GamePipe_SC_Proxy.h">
+      <Filter>GameServer\GamePipe</Filter>
+    </ClInclude>
+    <ClInclude Include="TileAround.h">
+      <Filter>GameServer\Sector</Filter>
+    </ClInclude>
+    <ClInclude Include="NetRoot\Common\DBConnector.h">
+      <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NetRoot\Common\libmysql.dll">
+      <Filter>NetRoot\Common</Filter>
+    </None>
+  </ItemGroup>
+</Project>

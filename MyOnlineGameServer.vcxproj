@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{c06a8f05-3649-4b44-a75f-1b969fc1fad2}</ProjectGuid>
+    <RootNamespace>MyOnlineGameServer</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir);C:\Program Files\MySQL\MySQL Server 8.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\MySQL\MySQL Server 8.0\lib;C:\Program Files\MySQL\MySQL Server 8.0\bin;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libmysql.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="MyOnlineGameServer.cpp" />
+    <ClCompile Include="NetRoot\Common\Crash.cpp" />
+    <ClCompile Include="NetRoot\Common\DBConnector.cpp" />
+    <ClCompile Include="NetRoot\Common\Parser.cpp" />
+    <ClCompile Include="NetRoot\Common\PDHMonitor.cpp" />
+    <ClCompile Include="NetRoot\Common\Profiler.cpp" />
+    <ClCompile Include="NetRoot\Common\RingBuffer.cpp" />
+    <ClCompile Include="NetRoot\Common\SizedMemoryPool.cpp" />
+    <ClCompile Include="NetRoot\Common\SystemLogger.cpp" />
+    <ClCompile Include="NetRoot\LanClient\LanClient.cpp" />
+    <ClCompile Include="NetRoot\LanServer\LanLargePacket.cpp" />
+    <ClCompile Include="NetRoot\LanServer\LanPacket.cpp" />
+    <ClCompile Include="NetRoot\LanServer\LanPacketSet.cpp" />
+    <ClCompile Include="NetRoot\LanServer\LanPipe.cpp" />
+    <ClCompile Include="NetRoot\LanServer\LanServer.cpp" />
+    <ClCompile Include="NetRoot\LanServer\LanSession.cpp" />
+    <ClCompile Include="NetRoot\LanServer\LanSessionArray.cpp" />
+    <ClCompile Include="NetRoot\LanServer\LanSessionID.cpp" />
+    <ClCompile Include="NetRoot\NetServer\NetLargePacket.cpp" />
+    <ClCompile Include="NetRoot\NetServer\NetPacket.cpp" />
+    <ClCompile Include="NetRoot\NetServer\NetPacketSet.cpp" />
+    <ClCompile Include="NetRoot\NetServer\NetPipe.cpp" />
+    <ClCompile Include="NetRoot\NetServer\NetServer.cpp" />
+    <ClCompile Include="NetRoot\NetServer\NetSession.cpp" />
+    <ClCompile Include="NetRoot\NetServer\NetSessionArray.cpp" />
+    <ClCompile Include="NetRoot\NetServer\NetSessionID.cpp" />
+    <ClCompile Include="Object\Crystal.cpp" />
+    <ClCompile Include="Object\Monster.cpp" />
+    <ClCompile Include="Object\ObjectManager.cpp" />
+    <ClCompile Include="OnlineGameServer\AuthPipe.cpp" />
+    <ClCompile Include="OnlineGameServer\GamePipe.cpp" />
+    <ClCompile Include="OnlineGameServer\GameServer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommonProtocol.h" />
+    <ClInclude Include="DBSaveJob.h" />
+    <ClInclude Include="NetRoot\Common\ChunkLockFree.h" />
+    <ClInclude Include="NetRoot\Common\Crash.h" />
+    <ClInclude Include="NetRoot\Common\DBConnector.h" />
+    <ClInclude Include="NetRoot\Common\JobQueue.h" />
+    <ClInclude Include="NetRoot\Common\Lock.h" />
+    <ClInclude Include="NetRoot\Common\LockFreeEnqQueue.h" />
+    <ClInclude Include="NetRoot\Common\LockFreeQueue.h" />
+    <ClInclude Include="NetRoot\Common\LockFreeStack.h" />
+    <ClInclude Include="NetRoot\Common\MemTLS.h" />
+    <ClInclude Include="NetRoot\Common\MyList.h" />
+    <ClInclude Include="NetRoot\Common\MyMultimap.h" />
+    <ClInclude Include="NetRoot\Common\MyRedBlackTree.h" />
+    <ClInclude Include="NetRoot\Common\Parser.h" />
+    <ClInclude Include="NetRoot\Common\PDHMonitor.h" />
+    <ClInclude Include="NetRoot\Common\Profiler.h" />
+    <ClInclude Include="NetRoot\Common\Queue.h" />
+    <ClInclude Include="NetRoot\Common\QueueWithLock.h" />
+    <ClInclude Include="NetRoot\Common\RingBuffer.h" />
+    <ClInclude Include="NetRoot\Common\RPCBuffer.h" />
+    <ClInclude Include="NetRoot\Common\Singleton.h" />
+    <ClInclude Include="NetRoot\Common\SizedMemoryPool.h" />
+    <ClInclude Include="NetRoot\Common\SizedMemTLS.h" />
+    <ClInclude Include="NetRoot\Common\SwapQueue.h" />
+    <ClInclude Include="NetRoot\Common\SystemLogger.h" />
+    <ClInclude Include="NetRoot\LanClient\LanClient.h" />
+    <ClInclude Include="NetRoot\LanServer\LanDummyPacket.h" />
+    <ClInclude Include="NetRoot\LanServer\LanEnums.h" />
+    <ClInclude Include="NetRoot\LanServer\LanLargePacket.h" />
+    <ClInclude Include="NetRoot\LanServer\LanPacket.h" />
+    <ClInclude Include="NetRoot\LanServer\LanPacketSet.h" />
+    <ClInclude Include="NetRoot\LanServer\LanPipe.h" />
+    <ClInclude Include="NetRoot\LanServer\LanServer.h" />
+    <ClInclude Include="NetRoot\LanServer\LanSession.h" />
+    <ClInclude Include="NetRoot\LanServer\LanSessionArray.h" />
+    <ClInclude Include="NetRoot\LanServer\LanSessionID.h" />
+    <ClInclude Include="NetRoot\LanServer\LanUser.h" />
+    <ClInclude Include="NetRoot\NetServer\NetDummyPacket.h" />
+    <ClInclude Include="NetRoot\NetServer\NetEnums.h" />
+    <ClInclude Include="NetRoot\NetServer\NetLargePacket.h" />
+    <ClInclude Include="NetRoot\NetServer\NetPacket.h" />
+    <ClInclude Include="NetRoot\NetServer\NetPacketSet.h" />
+    <ClInclude Include="NetRoot\NetServer\NetPipe.h" />
+    <ClInclude Include="NetRoot\NetServer\NetServer.h" />
+    <ClInclude Include="NetRoot\NetServer\NetSession.h" />
+    <ClInclude Include="NetRoot\NetServer\NetSessionArray.h" />
+    <ClInclude Include="NetRoot\NetServer\NetSessionID.h" />
+    <ClInclude Include="NetRoot\NetServer\NetStub.h" />
+    <ClInclude Include="NetRoot\NetServer\NetUser.h" />
+    <ClInclude Include="NetRoot\NetServer\PipeManager.h" />
+    <ClInclude Include="Object\BaseObject.h" />
+    <ClInclude Include="Object\Crystal.h" />
+    <ClInclude Include="Object\Monster.h" />
+    <ClInclude Include="Object\ObjectManager.h" />
+    <ClInclude Include="OnlineGameServer\AuthPipe.h" />
+    <ClInclude Include="OnlineGameServer\AuthPipe_CS_Stub.h" />
+    <ClInclude Include="OnlineGameServer\AuthPipe_SC_Proxy.h" />
+    <ClInclude Include="OnlineGameServer\GameClient.h" />
+    <ClInclude Include="OnlineGameServer\GamePipe.h" />
+    <ClInclude Include="OnlineGameServer\GamePipe_CS_Stub.h" />
+    <ClInclude Include="OnlineGameServer\GamePipe_SC_Proxy.h" />
+    <ClInclude Include="OnlineGameServer\GameServer.h" />
+    <ClInclude Include="OnlineGameServer\PipePlayer.h" />
+    <ClInclude Include="OnlineGameServer\UserMap.h" />
+    <ClInclude Include="Sector\Sector.h" />
+    <ClInclude Include="Sector\SectorMap.h" />
+    <ClInclude Include="TileAround.h" />
+    <ClInclude Include="TilePos.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NetRoot\Common\libmysql.dll" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
