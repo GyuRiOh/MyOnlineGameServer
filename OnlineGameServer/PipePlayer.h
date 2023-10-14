@@ -136,6 +136,9 @@ namespace server_baby
 			oldHP_ = HP_;
 			HP_ += (static_cast<int>(sittingTime_ / 1000) * 5);
 
+			if (HP_ > HP_MAX)
+				HP_ = HP_MAX;
+
 			return true;
 		}
 		else
