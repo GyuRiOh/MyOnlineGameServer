@@ -684,9 +684,6 @@ void server_baby::GamePipe::AttackPlayer() noexcept
         if (obj->GetType() != eMONSTER_TYPE)
                 return;
 
-        if (obj->isDestroyReserved())
-                return;
-
         int random = rand() % 1000;
         if (random > MONSTER_ATTACK_PROBABILITY)
                 return;
@@ -789,8 +786,6 @@ void server_baby::GamePipe::MoveMonster() noexcept
             return;
         
         Monster* monster = static_cast<Monster*>(obj);
-        if (monster->isDead())
-            return;
 
         //이동 가능 범위 추리기
         TileAround tileAround;
@@ -918,10 +913,7 @@ void server_baby::GamePipe::RemoveMonsterAndCreateCrystal() noexcept
                 return;
 
             Monster* monster = static_cast<Monster*>(object);
-            if (!monster->isDead())
-                return;
-
-            monster->ReserveDestroy();
+            monster->Kill();
 
             //섹터 단위로 접속중인 사용자에게 몬스터 삭제 패킷을 뿌림
             NetSessionIDSet* idSet = NetSessionIDSet::Alloc();

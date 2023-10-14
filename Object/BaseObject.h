@@ -54,12 +54,12 @@ public:
 	int GetTileX() const noexcept { return data_->pos_.tileX; }
 	int GetTileY() const noexcept { return data_->pos_.tileY; }
 	TilePos GetTile() const noexcept { return data_->pos_; }
-	bool isDestroyReserved() const noexcept { return data_->destroyFlag_; }	
 	bool isSectorChanged() const noexcept { return !(data_->curSector_ == data_->oldSector_); }
 	SectorPos GetOldSector() const noexcept { return data_->oldSector_; }
 	SectorPos GetCurSector() const noexcept { return data_->curSector_; }
+	bool isKilled() const noexcept { return data_->destroyFlag_; }
 
-	void ReserveDestroy() noexcept { data_->destroyFlag_ = true; }
+	void Kill() noexcept { data_->destroyFlag_ = true; }
 
 	void UpdateTileAndSector(TilePos& tile) noexcept 
 	{

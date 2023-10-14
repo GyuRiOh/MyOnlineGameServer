@@ -55,7 +55,7 @@ void ObjectManager::Update() noexcept
 
 	sectorMap_.Destroy([this](BaseObject*& obj)
 		{
-			if (obj->isDestroyReserved())
+			if (obj->isKilled())
 			{
 				switch (obj->GetType())
 				{

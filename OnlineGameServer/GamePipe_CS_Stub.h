@@ -180,9 +180,6 @@ namespace server_baby
 						
 						Monster* monster = static_cast<Monster*>(obj);
 
-						if (monster->isDead())
-							return;
-
 						monster->GetDamaged(5);
 
 						damagedMonster.emplace_back(monster);
@@ -228,10 +225,6 @@ namespace server_baby
 					if (obj->GetType() == eMONSTER_TYPE)
 					{
 						Monster* monster = static_cast<Monster*>(obj);
-						
-						if (monster->isDead())
-							return;
-
 						monster->GetDamaged(20);
 						damagedMonster.emplace_back(monster);
 					}
@@ -283,15 +276,11 @@ namespace server_baby
 						//크리스탈의 포인터를 받음
 						pickedCrystal = static_cast<Crystal*>(obj);
 
-						//삭제가 예약된 크리스탈은 이미 획득된 것이므로 제외
-						if (pickedCrystal->isDestroyReserved())
-							return;
-
 						//플레이어 크리스탈에 더하기
 						player->AddCrystal(pickedCrystal->GetCrystalAmount());
 
 						//크리스탈은 사라짐
-						pickedCrystal->ReserveDestroy();
+						pickedCrystal->Kill();
 						
 					}
 				});

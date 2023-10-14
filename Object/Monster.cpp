@@ -38,5 +38,5 @@ void Monster::GetDamaged(int damage) noexcept
 {
 	HP_ -= damage;
 	if (HP_ <= 0)
-		ReserveDestroy();
+		Kill();
 }

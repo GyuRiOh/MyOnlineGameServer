@@ -15,7 +15,7 @@ public:
 	void GetDamaged(int damage) noexcept;
 	USHORT GetRotation() const noexcept { return rotation_; }
 
-	bool isDead() { return (isDestroyReserved()); }
+	bool isDead() { return (isKilled()); }
 private:
 	int HP_;
 	USHORT rotation_;
