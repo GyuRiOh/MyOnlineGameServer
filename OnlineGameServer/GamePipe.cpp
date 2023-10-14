@@ -684,9 +684,12 @@ void server_baby::GamePipe::AttackPlayer() noexcept
         if (obj->GetType() != eMONSTER_TYPE)
                 return;
 
+        if (obj->isDestroyReserved())
+                return;
+
         int random = rand() % 1000;
         if (random > MONSTER_ATTACK_PROBABILITY)
-            return;
+                return;
 
         std::vector<PipePlayer*> damagedPlayer;
 
@@ -784,8 +787,10 @@ void server_baby::GamePipe::MoveMonster() noexcept
     {
         if (obj->GetType() != eMONSTER_TYPE)
             return;
-
+        
         Monster* monster = static_cast<Monster*>(obj);
+        if (monster->isDead())
+            return;
 
         //이동 가능 범위 추리기
         TileAround tileAround;
@@ -844,10 +849,8 @@ void server_baby::GamePipe::MoveMonster() noexcept
 
 void server_baby::GamePipe::InitializeMap() noexcept
 {
-    //비트맵 파일 헤더
+    //비트맵 파일 헤더, 이미지 헤더
     BITMAPFILEHEADER bf;
-
-    //비트맵 이미지 헤더
     BITMAPINFOHEADER bi;
 
     ifstream fin;
@@ -859,9 +862,10 @@ void server_baby::GamePipe::InitializeMap() noexcept
     fin.read(reinterpret_cast<char*>(&bf), sizeof(bf));
     fin.read(reinterpret_cast<char*>(&bi), sizeof(bi));
 
-    //픽셀 데이터를 읽기 위한 메모리 할당
+    //픽셀 데이터를 읽기 위한 메모리 할당 및 메모리 읽기
     UCHAR inputData[400 * 200 * 3];
-    fin.read(reinterpret_cast<char*>(&inputData), bi.biWidth * bi.biHeight* 3);
+    fin.read(reinterpret_cast<char*>(&inputData), 
+        bi.biWidth * bi.biHeight* 3);
 
     //색상값을 읽어 처리하는 코드
     bool red, green, blue = 0;
@@ -874,7 +878,6 @@ void server_baby::GamePipe::InitializeMap() noexcept
         blue = inputData[pixelIdx];
         green = inputData[pixelIdx + 1];
         red = inputData[pixelIdx + 2];
-
         
         if (blue)
             map_[Y][X] = 0; //흰색이라면 0 넣기

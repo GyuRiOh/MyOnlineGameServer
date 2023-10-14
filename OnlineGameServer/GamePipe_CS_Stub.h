@@ -228,7 +228,7 @@ namespace server_baby
 					if (obj->GetType() == eMONSTER_TYPE)
 					{
 						Monster* monster = static_cast<Monster*>(obj);
-
+						
 						if (monster->isDead())
 							return;
 
@@ -282,6 +282,10 @@ namespace server_baby
 						//플레이어는 크리스탈 획득
 						//크리스탈의 포인터를 받음
 						pickedCrystal = static_cast<Crystal*>(obj);
+
+						//삭제가 예약된 크리스탈은 이미 획득된 것이므로 제외
+						if (pickedCrystal->isDestroyReserved())
+							return;
 
 						//플레이어 크리스탈에 더하기
 						player->AddCrystal(pickedCrystal->GetCrystalAmount());
