@@ -176,12 +176,13 @@ namespace server_baby
 				[&damagedMonster](BaseObject* obj)
 				{
 					if (obj->GetType() == eMONSTER_TYPE)
-					{
-						
+					{	
 						Monster* monster = static_cast<Monster*>(obj);
 
-						monster->GetDamaged(5);
+						if (monster->isZeroHP())
+							return;
 
+						monster->GetDamaged(5);
 						damagedMonster.emplace_back(monster);
 					}
 				}
@@ -193,7 +194,7 @@ namespace server_baby
 			//섹터 돌면서 데미지 패킷 쏘기
 			for (auto monster : damagedMonster)
 			{
-				if (monster->isDead())
+				if (monster->isZeroHP())
 					player->AddExp(10);
 
 				NetSessionIDSet* idSet = NetSessionIDSet::Alloc();
@@ -225,6 +226,10 @@ namespace server_baby
 					if (obj->GetType() == eMONSTER_TYPE)
 					{
 						Monster* monster = static_cast<Monster*>(obj);
+
+						if (monster->isZeroHP())
+							return;
+
 						monster->GetDamaged(20);
 						damagedMonster.emplace_back(monster);
 					}
@@ -234,7 +239,7 @@ namespace server_baby
 			//섹터 돌면서 데미지 패킷 쏘기
 			for (auto monster : damagedMonster)
 			{
-				if (monster->isDead())
+				if (monster->isZeroHP())
 					player->AddExp(10);
 
 				NetSessionIDSet* idSet = NetSessionIDSet::Alloc();

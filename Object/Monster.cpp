@@ -37,6 +37,4 @@ void Monster::OnUpdate() noexcept
 void Monster::GetDamaged(int damage) noexcept
 {
 	HP_ -= damage;
-	if (HP_ <= 0)
-		Kill();
 }

@@ -913,6 +913,9 @@ void server_baby::GamePipe::RemoveMonsterAndCreateCrystal() noexcept
                 return;
 
             Monster* monster = static_cast<Monster*>(object);
+            if (!monster->isZeroHP())
+                return;
+
             monster->Kill();
 
             //섹터 단위로 접속중인 사용자에게 몬스터 삭제 패킷을 뿌림
