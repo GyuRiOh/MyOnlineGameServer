@@ -4,10 +4,9 @@
 #include "../NetRoot/NetServer/NetSessionID.h"
 #include "../NetRoot/Common/SizedMemoryPool.h"
 
-const TilePos monsterRespawn[7] = {
+const TilePos monsterRespawn[6] = {
 	TilePos(15.0f, 85.0f),
 	TilePos(17.5f, 34.0f),
-	TilePos(47.5f, 59.5f),
 	TilePos(83.5f, 79.0f),
 	TilePos(81.5f, 18.5f),
 	TilePos(106.5f, 92.5f),
@@ -16,8 +15,8 @@ const TilePos monsterRespawn[7] = {
 ObjectManager::ObjectManager() : monsterSize_(0), crystalSize_(0){}
 
 Monster* ObjectManager::CreateMonster(INT64 id) noexcept
-{
-	int random = rand() % 7;
+{	
+	int random = rand() % 6;
 
 	BaseObject* monster = reinterpret_cast<BaseObject*>(
 		server_baby::SizedMemoryPool::GetInstance()->Alloc(sizeof(Monster)));

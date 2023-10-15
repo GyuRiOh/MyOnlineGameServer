@@ -29,10 +29,10 @@ DBSaveEvent_(CreateEvent(NULL, FALSE, NULL, NULL)), gameDBConnector_(nullptr)
         3306);
 
     authPipe_ = new AuthPipe(this, 60);
-    gamePipe_ = new GamePipe(this, 60);
-
+    gamePipe_ = new PipeManager<GamePipe>(3, 100, this, 6789, 60, false); 
+    
     RegisterPipe(AUTH_PIPE_ID, authPipe_);
-    RegisterPipe(GAME_PIPE_ID, gamePipe_);
+    gamePipe_->Start();
 }
 
 server_baby::GameServer::~GameServer() noexcept 
@@ -184,21 +184,21 @@ void server_baby::GameServer::OnMonitor(const MonitoringInfo* const info) noexce
     onlineGameClient_.SendPacket(packet);
     packet->Clear();
 
-    *packet << static_cast<WORD>(en_PACKET_SS_MONITOR_DATA_UPDATE);
-    *packet << static_cast<BYTE>(dfMONITOR_DATA_TYPE_GAME_GAME_PLAYER);
-    *packet << static_cast<int>(gamePipe_->GetUserSize());
-    *packet << static_cast<int>(timer);
+    //*packet << static_cast<WORD>(en_PACKET_SS_MONITOR_DATA_UPDATE);
+    //*packet << static_cast<BYTE>(dfMONITOR_DATA_TYPE_GAME_GAME_PLAYER);
+    //*packet << static_cast<int>(gamePipe_->GetUserSize());
+    //*packet << static_cast<int>(timer);
 
-    onlineGameClient_.SendPacket(packet);
-    packet->Clear();
+    //onlineGameClient_.SendPacket(packet);
+    //packet->Clear();
 
-    *packet << static_cast<WORD>(en_PACKET_SS_MONITOR_DATA_UPDATE);
-    *packet << static_cast<BYTE>(dfMONITOR_DATA_TYPE_GAME_GAME_THREAD_FPS);
-    *packet << static_cast<int>(gamePipe_->framePerSec_);
-    *packet << static_cast<int>(timer);
+    //*packet << static_cast<WORD>(en_PACKET_SS_MONITOR_DATA_UPDATE);
+    //*packet << static_cast<BYTE>(dfMONITOR_DATA_TYPE_GAME_GAME_THREAD_FPS);
+    //*packet << static_cast<int>(gamePipe_->framePerSec_);
+    //*packet << static_cast<int>(timer);
 
-    onlineGameClient_.SendPacket(packet);
-    packet->Clear();
+    ////onlineGameClient_.SendPacket(packet);
+    //packet->Clear();
 
     *packet << static_cast<WORD>(en_PACKET_SS_MONITOR_DATA_UPDATE);
     *packet << static_cast<BYTE>(dfMONITOR_DATA_TYPE_GAME_AUTH_PLAYER);

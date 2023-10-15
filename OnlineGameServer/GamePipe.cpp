@@ -913,6 +913,7 @@ void server_baby::GamePipe::RemoveMonsterAndCreateCrystal() noexcept
                 return;
 
             Monster* monster = static_cast<Monster*>(object);
+
             if (!monster->isZeroHP())
                 return;
 

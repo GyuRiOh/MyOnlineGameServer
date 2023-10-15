@@ -46,7 +46,7 @@ namespace server_baby
 
     private:
         AuthPipe* authPipe_; 
-        GamePipe* gamePipe_;
+        PipeManager<GamePipe>* gamePipe_;
     };
 
 
