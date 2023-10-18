@@ -43,7 +43,7 @@ MyNetwork::GameServer::~GameServer() noexcept
 
 bool MyNetwork::GameServer::OnConnectionRequest(const SOCKADDR_IN* const addr) noexcept
 {
-    //IP, Port 로그 저장하기
+    //IP, Port 확인하고 필터링
     return true;
 }
 
