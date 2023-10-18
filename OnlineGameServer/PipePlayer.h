@@ -7,7 +7,7 @@
 constexpr int HP_RECOVERY = 1;
 constexpr int HP_MAX = 5000;
 
-namespace server_baby
+namespace MyNetwork
 {
 	class PipePlayer : public NetUser
 	{
@@ -53,7 +53,7 @@ namespace server_baby
 
 		void Damaged(int damage) noexcept { HP_ -= damage; }
 		bool isFatal() const noexcept { return (HP_ <= 0); }
-		void Kill() noexcept { isDead_ = true; }
+		void KillSelf() noexcept { isDead_ = true; }
 		void Resurrect() noexcept;
 		bool UpdateSector(float posX, float posY) noexcept;
 		bool StandUp() noexcept;

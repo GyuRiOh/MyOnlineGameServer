@@ -8,7 +8,7 @@ class Player final : public BaseObject
 	struct PlayerData
 	{
 		WCHAR nickName_[20];
-		server_baby::NetSessionID clientID_;
+		MyNetwork::NetSessionID clientID_;
 		INT64 Exp_;
 		int crystal_;
 		int HP_;
@@ -17,7 +17,7 @@ class Player final : public BaseObject
 	};
 
 public:
-	Player(float X, float Y, int objectType, __int64 objID, server_baby::NetSessionID clientID) noexcept;
+	Player(float X, float Y, int objectType, __int64 objID, MyNetwork::NetSessionID clientID) noexcept;
 	Player(Player&& other) noexcept;
 	~Player();
 

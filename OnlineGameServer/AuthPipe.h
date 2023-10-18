@@ -5,7 +5,7 @@
 #include "UserMap.h"
 #include <cpp_redis/cpp_redis>
 
-namespace server_baby
+namespace MyNetwork
 {
 	class AuthPipe_CS_Stub;
 	class AuthPipe_SC_Proxy;

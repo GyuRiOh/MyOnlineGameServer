@@ -10,7 +10,7 @@
 #include "../NetRoot/Common/DBConnector.h"
 #include <thread>
 
-namespace server_baby
+namespace MyNetwork
 {
 	class PipePlayer;
 	class GamePipe_CS_Stub;

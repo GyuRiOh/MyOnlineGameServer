@@ -19,7 +19,7 @@ Monster* ObjectManager::CreateMonster(INT64 id) noexcept
 	int random = rand() % 6;
 
 	BaseObject* monster = reinterpret_cast<BaseObject*>(
-		server_baby::SizedMemoryPool::GetInstance()->Alloc(sizeof(Monster)));
+		MyNetwork::SizedMemoryPool::GetInstance()->Alloc(sizeof(Monster)));
 		
 	new (monster) Monster(
 		monsterRespawn[random].clientX,
@@ -36,7 +36,7 @@ Monster* ObjectManager::CreateMonster(INT64 id) noexcept
 Crystal* ObjectManager::CreateCrystal(float X, float Y, BYTE type, INT64 id) noexcept
 {
 	BaseObject* crystal = reinterpret_cast<BaseObject*>(
-		server_baby::SizedMemoryPool::GetInstance()->Alloc(sizeof(Crystal)));
+		MyNetwork::SizedMemoryPool::GetInstance()->Alloc(sizeof(Crystal)));
 		
 	new (crystal) Crystal(X, Y, eCRYSTAL_TYPE, type, id);
 
@@ -54,7 +54,7 @@ void ObjectManager::Update() noexcept
 
 	sectorMap_.Destroy([this](BaseObject*& obj)
 		{
-			if (obj->isKilled())
+			if (obj->isDestroyed())
 			{
 				switch (obj->GetType())
 				{
@@ -65,12 +65,12 @@ void ObjectManager::Update() noexcept
 					crystalSize_--;
 					break;
 				default:
-					server_baby::CrashDump::Crash();
+					MyNetwork::CrashDump::Crash();
 					break;
 				}
 
 				obj->~BaseObject();
-				server_baby::SizedMemoryPool::GetInstance()->Free(obj);
+				MyNetwork::SizedMemoryPool::GetInstance()->Free(obj);
 				return true;
 			}
 			else

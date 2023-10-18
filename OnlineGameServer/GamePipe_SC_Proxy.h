@@ -4,7 +4,7 @@
 #include "GamePipe.h"
 #include "../CommonProtocol.h"
 
-namespace server_baby
+namespace MyNetwork
 {
 	class GamePipe_SC_Proxy final
 	{

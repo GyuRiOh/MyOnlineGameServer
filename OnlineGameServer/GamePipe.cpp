@@ -13,7 +13,7 @@ constexpr int MONSTER_GEN_MAX = 200;
 constexpr int MONSTER_DAMAGE = 10;
 constexpr int MONSTER_ATTACK_PROBABILITY = 3;
 
-server_baby::GamePipe::GamePipe(NetRoot* server, unsigned int framePerSecond, unsigned int threadNum) noexcept
+MyNetwork::GamePipe::GamePipe(NetRoot* server, unsigned int framePerSecond, unsigned int threadNum) noexcept
 	: NetPipe(server, framePerSecond), framePerSec_(0), clientIDStamp_(1)
 {
     RegisterPipeStub(new GamePipe_CS_Stub(this));
@@ -22,19 +22,19 @@ server_baby::GamePipe::GamePipe(NetRoot* server, unsigned int framePerSecond, un
     InitializeMap();
 }
 
-server_baby::GamePipe::~GamePipe() noexcept
+MyNetwork::GamePipe::~GamePipe() noexcept
 {
     delete proxy_;
 }
 
-server_baby::NetUser* server_baby::GamePipe::OnUserJoin(NetSessionID sessionID) noexcept
+MyNetwork::NetUser* MyNetwork::GamePipe::OnUserJoin(NetSessionID sessionID) noexcept
 {
     //절대 호출 X
     CrashDump::Crash();
     return nullptr;
 }
 
-void server_baby::GamePipe::OnUserLeave(NetUser* user) noexcept
+void MyNetwork::GamePipe::OnUserLeave(NetUser* user) noexcept
 {
     //네트워크 스레드가 알려준
     //스레드에서 떠나는 유저
@@ -84,7 +84,7 @@ void server_baby::GamePipe::OnUserLeave(NetUser* user) noexcept
 
 }
 
-void server_baby::GamePipe::OnUserMoveIn(NetUser* user) noexcept
+void MyNetwork::GamePipe::OnUserMoveIn(NetUser* user) noexcept
 {
     PipePlayer* player = static_cast<PipePlayer*>(user);
 
@@ -117,13 +117,13 @@ void server_baby::GamePipe::OnUserMoveIn(NetUser* user) noexcept
     StartGame(static_cast<PipePlayer*>(user));
 }
 
-void server_baby::GamePipe::OnUserMoveOut(NetUser* user) noexcept
+void MyNetwork::GamePipe::OnUserMoveOut(NetUser* user) noexcept
 {
     //절대 호출 X
     CrashDump::Crash();
 }
 
-void server_baby::GamePipe::OnUpdate() noexcept
+void MyNetwork::GamePipe::OnUpdate() noexcept
 {
     //죽은 몬스터가 있는 경우 삭제하고, 
     //크리스탈 생성하기
@@ -143,7 +143,7 @@ void server_baby::GamePipe::OnUpdate() noexcept
 
 }
 
-void server_baby::GamePipe::OnUserUpdate(NetUser* user) noexcept
+void MyNetwork::GamePipe::OnUserUpdate(NetUser* user) noexcept
 {
     PipePlayer* player = static_cast<PipePlayer*>(user);
     ULONGLONG nowTime = GetTickCount64();
@@ -177,7 +177,7 @@ void server_baby::GamePipe::OnUserUpdate(NetUser* user) noexcept
         player->SubCrystal(1);
 
         //죽은 상태로 바꾸기
-        player->Kill();
+        player->KillSelf();
 
         //플레이어 HP정보 바꾸기
         player->ResetInGameData();
@@ -219,7 +219,7 @@ void server_baby::GamePipe::OnUserUpdate(NetUser* user) noexcept
 }
 
 
-void server_baby::GamePipe::OnMonitor(const LoopInfo* const info) noexcept 
+void MyNetwork::GamePipe::OnMonitor(const LoopInfo* const info) noexcept 
 {
     wchar_t title[64] = { 0 };
     swprintf_s(title, L"GamePipe %d", GetCurrentThreadId());
@@ -228,7 +228,7 @@ void server_baby::GamePipe::OnMonitor(const LoopInfo* const info) noexcept
     framePerSec_ = info->frameCountPerSecond_;
 }
 
-void server_baby::GamePipe::OnStart() noexcept
+void MyNetwork::GamePipe::OnStart() noexcept
 {
     HANDLE thread = GetCurrentThread();
     DWORD dwThreadPri = GetThreadPriority(thread);
@@ -244,13 +244,13 @@ void server_baby::GamePipe::OnStart() noexcept
 
 }
 
-void server_baby::GamePipe::OnStop() noexcept
+void MyNetwork::GamePipe::OnStop() noexcept
 {
     SystemLogger::GetInstance()->Console(L"PipeManager", LEVEL_DEBUG, L"GamePipe Stopped");
 
 }
 
-void server_baby::GamePipe::GetSessionIDSet_AroundSector(SectorPos sector, NetSessionIDSet* const set) noexcept
+void MyNetwork::GamePipe::GetSessionIDSet_AroundSector(SectorPos sector, NetSessionIDSet* const set) noexcept
 {
     SectorAround sectorAround;
     sectorMap_.GetSectorAround(sector, sectorAround);
@@ -266,7 +266,7 @@ void server_baby::GamePipe::GetSessionIDSet_AroundSector(SectorPos sector, NetSe
 
 }
 
-void server_baby::GamePipe::GetSessionIDSet_AroundSector_WithoutID(NetSessionID exceptionID, SectorPos sector, NetSessionIDSet* const set) noexcept
+void MyNetwork::GamePipe::GetSessionIDSet_AroundSector_WithoutID(NetSessionID exceptionID, SectorPos sector, NetSessionIDSet* const set) noexcept
 {
     SectorAround sectorAround;
     sectorMap_.GetSectorAround(sector, sectorAround);
@@ -282,7 +282,7 @@ void server_baby::GamePipe::GetSessionIDSet_AroundSector_WithoutID(NetSessionID 
     }
 }
 
-void server_baby::GamePipe::UpdateSector(PipePlayer* player) noexcept
+void MyNetwork::GamePipe::UpdateSector(PipePlayer* player) noexcept
 {
 
     if (!player->isSectorChanged())
@@ -316,7 +316,7 @@ void server_baby::GamePipe::UpdateSector(PipePlayer* player) noexcept
     CreateMyCharacterInSectorAround(player);
 }
 
-void server_baby::GamePipe::UpdateSector(BaseObject* object) noexcept
+void MyNetwork::GamePipe::UpdateSector(BaseObject* object) noexcept
 {
     if (!object->isSectorChanged())
         return;
@@ -375,7 +375,7 @@ void server_baby::GamePipe::UpdateSector(BaseObject* object) noexcept
     );
 }
 
-void server_baby::GamePipe::StartGame(PipePlayer* player) noexcept
+void MyNetwork::GamePipe::StartGame(PipePlayer* player) noexcept
 {
     //ClientID 부여
     player->InitializeInGameData(GetClientIDStamp());
@@ -403,7 +403,7 @@ void server_baby::GamePipe::StartGame(PipePlayer* player) noexcept
     UpdateSector(player);
 }
 
-void server_baby::GamePipe::RestartGame(PipePlayer* player) noexcept
+void MyNetwork::GamePipe::RestartGame(PipePlayer* player) noexcept
 {
 
     //주변 섹터에 삭제 패킷 전송
@@ -544,7 +544,7 @@ void server_baby::GamePipe::RestartGame(PipePlayer* player) noexcept
     );
 }
 
-void server_baby::GamePipe::CreateObjectInSectorAroundForSpecificPlayer(PipePlayer* player) noexcept
+void MyNetwork::GamePipe::CreateObjectInSectorAroundForSpecificPlayer(PipePlayer* player) noexcept
 { 
     //주변 섹터 다른 오브젝트 생성
     objectManager_.ForeachComplementSectorAround_BasedFrom(
@@ -581,7 +581,7 @@ void server_baby::GamePipe::CreateObjectInSectorAroundForSpecificPlayer(PipePlay
 
 }
 
-void server_baby::GamePipe::CreateOthreCharacterInSectorAroundForSpecificPlayer(PipePlayer* player) noexcept
+void MyNetwork::GamePipe::CreateOthreCharacterInSectorAroundForSpecificPlayer(PipePlayer* player) noexcept
 {
     //주변 섹터 다른 캐릭터 생성
     sectorMap_.ForeachComplementSectorAround_BasedFrom(
@@ -608,7 +608,7 @@ void server_baby::GamePipe::CreateOthreCharacterInSectorAroundForSpecificPlayer(
 
 }
 
-void server_baby::GamePipe::CreateMyCharacterInSectorAround(PipePlayer* player) noexcept
+void MyNetwork::GamePipe::CreateMyCharacterInSectorAround(PipePlayer* player) noexcept
 {
     sectorMap_.ForeachComplementSectorAround_BasedFrom(
         player->GetCurSector(),
@@ -634,7 +634,7 @@ void server_baby::GamePipe::CreateMyCharacterInSectorAround(PipePlayer* player) 
     );
 }
 
-void server_baby::GamePipe::RemoveMyCharacterFromOldSector(PipePlayer* player) noexcept
+void MyNetwork::GamePipe::RemoveMyCharacterFromOldSector(PipePlayer* player) noexcept
 {
     sectorMap_.ForeachComplementSectorAround_BasedFrom(
         player->GetOldSector(), 
@@ -647,7 +647,7 @@ void server_baby::GamePipe::RemoveMyCharacterFromOldSector(PipePlayer* player) n
         });
 }
 
-void server_baby::GamePipe::RemoveObjectFromOldSectorForSpecificPlayer(PipePlayer* player) noexcept
+void MyNetwork::GamePipe::RemoveObjectFromOldSectorForSpecificPlayer(PipePlayer* player) noexcept
 {
 
     objectManager_.ForeachComplementSectorAround_BasedFrom(
@@ -660,7 +660,7 @@ void server_baby::GamePipe::RemoveObjectFromOldSectorForSpecificPlayer(PipePlaye
 
 }
 
-void server_baby::GamePipe::RemoveOtherCharacterFromOldSectorForSpecificPlayer(PipePlayer* player) noexcept
+void MyNetwork::GamePipe::RemoveOtherCharacterFromOldSectorForSpecificPlayer(PipePlayer* player) noexcept
 { 
     //주변 섹터 다른 캐릭터 삭제
     sectorMap_.ForeachComplementSectorAround_BasedFrom(
@@ -676,7 +676,7 @@ void server_baby::GamePipe::RemoveOtherCharacterFromOldSectorForSpecificPlayer(P
 }
 
 
-void server_baby::GamePipe::AttackPlayer() noexcept
+void MyNetwork::GamePipe::AttackPlayer() noexcept
 {
     
     objectManager_.ForeachAll([this](BaseObject* obj)
@@ -722,7 +722,7 @@ void server_baby::GamePipe::AttackPlayer() noexcept
 
 }
 
-void server_baby::GamePipe::DBSave(PipePlayer* player, BYTE dbType, const WCHAR* stringFormat, ...) noexcept
+void MyNetwork::GamePipe::DBSave(PipePlayer* player, BYTE dbType, const WCHAR* stringFormat, ...) noexcept
 {
     if (dbType == eGameDB)
         player->UpdateLastDBSaveTime();
@@ -741,16 +741,16 @@ void server_baby::GamePipe::DBSave(PipePlayer* player, BYTE dbType, const WCHAR*
 
     if (FAILED(hResult))
     {
-        server_baby::SystemLogger::GetInstance()->LogText(
-            L"DBSaveJob-Query", server_baby::LEVEL_ERROR, L"Query Too Long... : %s", job->query);
-        server_baby::CrashDump::Crash();
+        MyNetwork::SystemLogger::GetInstance()->LogText(
+            L"DBSaveJob-Query", MyNetwork::LEVEL_ERROR, L"Query Too Long... : %s", job->query);
+        MyNetwork::CrashDump::Crash();
     }
 
     static_cast<GameServer*>(GetRoot())->DBSave(job);
 
 }
 
-void server_baby::GamePipe::GenerateNewMonster() noexcept
+void MyNetwork::GamePipe::GenerateNewMonster() noexcept
 {
     //몬스터 50마리 이하면 50마리까지 신규 생성
     //100마리 이상이면 신규생성하지 않음
@@ -776,7 +776,7 @@ void server_baby::GamePipe::GenerateNewMonster() noexcept
     }
 }
 
-void server_baby::GamePipe::MoveMonster() noexcept
+void MyNetwork::GamePipe::MoveMonster() noexcept
 {
     std::vector<Monster*> movedMonster;
 
@@ -842,7 +842,7 @@ void server_baby::GamePipe::MoveMonster() noexcept
 
 }
 
-void server_baby::GamePipe::InitializeMap() noexcept
+void MyNetwork::GamePipe::InitializeMap() noexcept
 {
     //비트맵 파일 헤더, 이미지 헤더
     BITMAPFILEHEADER bf;
@@ -901,7 +901,7 @@ void server_baby::GamePipe::InitializeMap() noexcept
 
 }
 
-void server_baby::GamePipe::RemoveMonsterAndCreateCrystal() noexcept
+void MyNetwork::GamePipe::RemoveMonsterAndCreateCrystal() noexcept
 {
 
     std::vector<Crystal*> createdCrystal;
@@ -917,7 +917,7 @@ void server_baby::GamePipe::RemoveMonsterAndCreateCrystal() noexcept
             if (!monster->isZeroHP())
                 return;
 
-            monster->Kill();
+            monster->DestroySelf();
 
             //섹터 단위로 접속중인 사용자에게 몬스터 삭제 패킷을 뿌림
             NetSessionIDSet* idSet = NetSessionIDSet::Alloc();
@@ -956,7 +956,7 @@ void server_baby::GamePipe::RemoveMonsterAndCreateCrystal() noexcept
 }
 
 
-MYSQL_ROW server_baby::GamePipe::GameDBQuery(const WCHAR* stringFormat, ...) noexcept
+MYSQL_ROW MyNetwork::GamePipe::GameDBQuery(const WCHAR* stringFormat, ...) noexcept
 {
     WCHAR query[1024] = { 0 };
 
@@ -970,19 +970,19 @@ MYSQL_ROW server_baby::GamePipe::GameDBQuery(const WCHAR* stringFormat, ...) noe
 
     if (FAILED(hResult))
     {
-        server_baby::SystemLogger::GetInstance()->LogText(
-            L"GameDB-Query", server_baby::LEVEL_ERROR, L"Query Too Long... : %s", query);
-        server_baby::CrashDump::Crash();
+        MyNetwork::SystemLogger::GetInstance()->LogText(
+            L"GameDB-Query", MyNetwork::LEVEL_ERROR, L"Query Too Long... : %s", query);
+        MyNetwork::CrashDump::Crash();
     }
 
-    server_baby::GameServer* server = static_cast<GameServer*>(GetRoot());
+    MyNetwork::GameServer* server = static_cast<GameServer*>(GetRoot());
     server->gameDBConnector_->Query(query);
 
     return server->gameDBConnector_->FetchRow();
 
 }
 
-MYSQL_ROW server_baby::GamePipe::LogDBQuery(const WCHAR* stringFormat, ...) noexcept
+MYSQL_ROW MyNetwork::GamePipe::LogDBQuery(const WCHAR* stringFormat, ...) noexcept
 {
     WCHAR query[1024] = { 0 };
 
@@ -996,24 +996,24 @@ MYSQL_ROW server_baby::GamePipe::LogDBQuery(const WCHAR* stringFormat, ...) noex
 
     if (FAILED(hResult))
     {
-        server_baby::SystemLogger::GetInstance()->LogText(
-            L"LogDB-Query", server_baby::LEVEL_ERROR, L"Query Too Long... : %s", query);
-        server_baby::CrashDump::Crash();
+        MyNetwork::SystemLogger::GetInstance()->LogText(
+            L"LogDB-Query", MyNetwork::LEVEL_ERROR, L"Query Too Long... : %s", query);
+        MyNetwork::CrashDump::Crash();
     }
 
-    server_baby::GameServer* server = static_cast<GameServer*>(GetRoot());
+    MyNetwork::GameServer* server = static_cast<GameServer*>(GetRoot());
     server->logDBConnector_->Query(query);
 
     return server->logDBConnector_->FetchRow();
 }
 
-void server_baby::GamePipe::GameDBFreeResult()
+void MyNetwork::GamePipe::GameDBFreeResult()
 {
     GameServer* server = static_cast<GameServer*>(GetRoot());
     server->gameDBConnector_->FreeResult();
 }
 
-void server_baby::GamePipe::LogDBFreeResult()
+void MyNetwork::GamePipe::LogDBFreeResult()
 {
     GameServer* server = static_cast<GameServer*>(GetRoot());
     server->logDBConnector_->FreeResult();

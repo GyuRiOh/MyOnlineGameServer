@@ -30,7 +30,7 @@ public:
 	BaseObject(const BaseObject& object) noexcept : data_(object.data_) { }
 	BaseObject(float X, float Y, int objectType, __int64 id) noexcept : data_(nullptr) 
 	{
-		data_ = reinterpret_cast<ObjectData*>(server_baby::SizedMemoryPool::GetInstance()->Alloc(sizeof(ObjectData)));
+		data_ = reinterpret_cast<ObjectData*>(MyNetwork::SizedMemoryPool::GetInstance()->Alloc(sizeof(ObjectData)));
 		data_->clientID_ = id;
 		data_->type_ = objectType;
 		data_->destroyFlag_ = false;
@@ -42,7 +42,7 @@ public:
 	virtual ~BaseObject() noexcept
 	{
 		if(data_)
-			server_baby::SizedMemoryPool::GetInstance()->Free(data_);
+			MyNetwork::SizedMemoryPool::GetInstance()->Free(data_);
 	};
 
 	virtual void OnUpdate(void) = 0;
@@ -57,9 +57,9 @@ public:
 	bool isSectorChanged() const noexcept { return !(data_->curSector_ == data_->oldSector_); }
 	SectorPos GetOldSector() const noexcept { return data_->oldSector_; }
 	SectorPos GetCurSector() const noexcept { return data_->curSector_; }
-	bool isKilled() const noexcept { return data_->destroyFlag_; }
+	bool isDestroyed() const noexcept { return data_->destroyFlag_; }
 
-	void Kill() noexcept { data_->destroyFlag_ = true; }
+	void DestroySelf() noexcept { data_->destroyFlag_ = true; }
 
 	void UpdateTileAndSector(TilePos& tile) noexcept 
 	{

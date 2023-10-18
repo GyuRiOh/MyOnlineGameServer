@@ -242,10 +242,10 @@ public:
 
 	void ErrorQuit(const WCHAR* msg)
 	{
-		server_baby::SystemLogger::GetInstance()->Console(L"SectorMap", server_baby::LEVEL_SYSTEM, msg);
-		server_baby::SystemLogger::GetInstance()->LogText(L"SectorMap", server_baby::LEVEL_SYSTEM, msg);
+		MyNetwork::SystemLogger::GetInstance()->Console(L"SectorMap", MyNetwork::LEVEL_SYSTEM, msg);
+		MyNetwork::SystemLogger::GetInstance()->LogText(L"SectorMap", MyNetwork::LEVEL_SYSTEM, msg);
 
-		server_baby::CrashDump::Crash();
+		MyNetwork::CrashDump::Crash();
 	}
 
 	//Key: SessionID, Value : Player*
@@ -326,7 +326,7 @@ public:
 	{
 		for (auto& obj : sectorMap_[sector.yPos_][sector.xPos_])
 		{
-			if (obj.second->isKilled())
+			if (obj.second->isDestroyed())
 				continue;
 
 			func(obj.second);
@@ -495,10 +495,10 @@ public:
 
 	void ErrorQuit(const WCHAR* msg)
 	{
-		server_baby::SystemLogger::GetInstance()->Console(L"SectorMap", server_baby::LEVEL_SYSTEM, msg);
-		server_baby::SystemLogger::GetInstance()->LogText(L"SectorMap", server_baby::LEVEL_SYSTEM, msg);
+		MyNetwork::SystemLogger::GetInstance()->Console(L"SectorMap", MyNetwork::LEVEL_SYSTEM, msg);
+		MyNetwork::SystemLogger::GetInstance()->LogText(L"SectorMap", MyNetwork::LEVEL_SYSTEM, msg);
 
-		server_baby::CrashDump::Crash();
+		MyNetwork::CrashDump::Crash();
 	}
 
 	//Key: SessionID, Value : Player*

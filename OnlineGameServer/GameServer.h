@@ -8,7 +8,7 @@
 #include "../NetRoot/Common/DBConnector.h"
 #include "../NetRoot/Common/LockFreeEnqQueue.h"
 
-namespace server_baby
+namespace MyNetwork
 {
 	class GameServer final : public NetRoot
 	{
@@ -50,12 +50,12 @@ namespace server_baby
     };
 
 
-    inline void server_baby::GameServer::OnClientJoin(NetSessionID sessionID) noexcept
+    inline void MyNetwork::GameServer::OnClientJoin(NetSessionID sessionID) noexcept
     {
         MovePipe(sessionID, authPipe_->GetPipeID().element_.code_);
     }
 
-    inline void server_baby::GameServer::DBSave(DBSaveJob* job) noexcept
+    inline void MyNetwork::GameServer::DBSave(DBSaveJob* job) noexcept
     {
         DBQueue_.Enqueue(job);
         SetEvent(DBSaveEvent_);

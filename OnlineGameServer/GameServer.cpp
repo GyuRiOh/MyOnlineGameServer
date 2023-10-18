@@ -3,7 +3,7 @@
 #include "../NetRoot/Common/Parser.h"
 #include "../CommonProtocol.h"
 
-server_baby::GameServer::GameServer() noexcept : 
+MyNetwork::GameServer::GameServer() noexcept : 
     authPipe_(nullptr), gamePipe_(nullptr), logDBConnector_(nullptr), accountDBConnector_(nullptr),
 DBSaveEvent_(CreateEvent(NULL, FALSE, NULL, NULL)), gameDBConnector_(nullptr)
 {
@@ -35,25 +35,25 @@ DBSaveEvent_(CreateEvent(NULL, FALSE, NULL, NULL)), gameDBConnector_(nullptr)
     gamePipe_->Start();
 }
 
-server_baby::GameServer::~GameServer() noexcept 
+MyNetwork::GameServer::~GameServer() noexcept 
 {
     delete gameDBConnector_;
     delete logDBConnector_;
 }
 
-bool server_baby::GameServer::OnConnectionRequest(const SOCKADDR_IN* const addr) noexcept
+bool MyNetwork::GameServer::OnConnectionRequest(const SOCKADDR_IN* const addr) noexcept
 {
     //IP, Port 로그 저장하기
     return true;
 }
 
-void server_baby::GameServer::OnClientLeave(NetSessionID NetSessionID) noexcept {}
-void server_baby::GameServer::OnRecv(NetPacketSet* const packetList) noexcept { DefaultOnRecv(packetList); }
-void server_baby::GameServer::OnSend(NetSessionID NetSessionID, int sendSize) noexcept {}
-void server_baby::GameServer::OnWorkerThreadBegin() noexcept {}
-void server_baby::GameServer::OnWorkerThreadEnd() noexcept {}
+void MyNetwork::GameServer::OnClientLeave(NetSessionID NetSessionID) noexcept {}
+void MyNetwork::GameServer::OnRecv(NetPacketSet* const packetList) noexcept { DefaultOnRecv(packetList); }
+void MyNetwork::GameServer::OnSend(NetSessionID NetSessionID, int sendSize) noexcept {}
+void MyNetwork::GameServer::OnWorkerThreadBegin() noexcept {}
+void MyNetwork::GameServer::OnWorkerThreadEnd() noexcept {}
 
-void server_baby::GameServer::OnMonitor(const MonitoringInfo* const info) noexcept
+void MyNetwork::GameServer::OnMonitor(const MonitoringInfo* const info) noexcept
 {
     HardwareMonitor::CpuUsageForProcessor::GetInstance()->UpdateCpuTime();
     ProcessMonitor::CpuUsageForProcess::GetInstance()->UpdateCpuTime();
@@ -225,7 +225,7 @@ void server_baby::GameServer::OnMonitor(const MonitoringInfo* const info) noexce
   
 }
 
-void server_baby::GameServer::OnStart() noexcept
+void MyNetwork::GameServer::OnStart() noexcept
 {   
     dbThread_ = std::thread([this] {
         DBThread();
@@ -240,7 +240,7 @@ void server_baby::GameServer::OnStart() noexcept
 
 }
 
-void server_baby::GameServer::DBThread() noexcept
+void MyNetwork::GameServer::DBThread() noexcept
 {
     while (isServerRunning())
     {
@@ -269,7 +269,7 @@ void server_baby::GameServer::DBThread() noexcept
     }
 }
 
-void server_baby::GetDateTime(WCHAR* buf) noexcept
+void MyNetwork::GetDateTime(WCHAR* buf) noexcept
 {
     time_t timer;
     struct tm t;

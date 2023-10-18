@@ -3,7 +3,7 @@
 #include "AuthPipe.h"
 #include "../CommonProtocol.h"
 
-namespace server_baby
+namespace MyNetwork
 {
 	class AuthPipe_SC_Proxy final
 	{

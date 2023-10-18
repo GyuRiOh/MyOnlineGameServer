@@ -13,7 +13,7 @@
 #include "GameServer.h"
 #include "../DBSaveJob.h"
 
-namespace server_baby
+namespace MyNetwork
 {
 	class AuthPipe_CS_Stub final : public NetStub
 	{

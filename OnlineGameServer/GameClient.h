@@ -2,7 +2,7 @@
 #include "../NetRoot/LanClient/LanClient.h"
 #include "../CommonProtocol.h"
 
-namespace server_baby
+namespace MyNetwork
 {
 	class GameClient : public LanClient
 	{

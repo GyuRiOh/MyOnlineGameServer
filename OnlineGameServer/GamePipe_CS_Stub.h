@@ -9,7 +9,7 @@
 #include "../DBSaveJob.h"
 #include "GameServer.h"
 
-namespace server_baby
+namespace MyNetwork
 {
 	class GamePipe_CS_Stub final : public NetStub
 	{
@@ -285,7 +285,7 @@ namespace server_baby
 						player->AddCrystal(pickedCrystal->GetCrystalAmount());
 
 						//Å©¸®½ºÅ»Àº »ç¶óÁü
-						pickedCrystal->Kill();
+						pickedCrystal->DestroySelf();
 						
 					}
 				});
