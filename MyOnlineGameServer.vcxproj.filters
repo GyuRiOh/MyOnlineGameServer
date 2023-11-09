@@ -42,6 +42,9 @@
     <Filter Include="GameServer\GamePipe">
       <UniqueIdentifier>{6ccab409-437b-4bac-aa57-b7c74170fb43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Precompileheader">
+      <UniqueIdentifier>{2219dbd8-b114-4ce6-9bc3-37db775c24ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyOnlineGameServer.cpp">
@@ -139,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="NetRoot\Common\DBConnector.cpp">
       <Filter>NetRoot\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_FSM_State.cpp">
+      <Filter>Object\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -348,6 +354,9 @@
     </ClInclude>
     <ClInclude Include="NetRoot\Common\DBConnector.h">
       <Filter>NetRoot\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster_FSM_State.h">
+      <Filter>Object\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

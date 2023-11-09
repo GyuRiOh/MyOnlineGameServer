@@ -1,13 +1,10 @@
 #include "Monster.h"
 
 float dx[3] = { -0.1 , 0, 0.1 };
-
+using namespace MyNetwork;
 
 Monster::Monster(float X, float Y, int objectType, __int64 id) noexcept : 
-	HP_(200), rotation_(180), BaseObject(X, Y, objectType, id)
-{
-	
-}
+	HP_(200), rotation_(180), BaseObject(X, Y, objectType, id){}
 
 const Monster& Monster::operator=(const Monster& object) noexcept
 {
@@ -24,17 +21,11 @@ Monster::Monster(Monster&& other) noexcept : BaseObject(std::move(other))
 	HP_ = other.HP_;
 }
 
-Monster::~Monster() noexcept
-{
-
-}
-
-void Monster::OnUpdate() noexcept
-{	
-
-}
+Monster::~Monster() noexcept{}
+void Monster::OnUpdate() noexcept {}
 
 void Monster::GetDamaged(int damage) noexcept
 {
 	HP_ -= damage;
 }
+

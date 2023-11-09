@@ -1369,7 +1369,7 @@ DWORD MyNetwork::NetRoot::MyWorkerProc()
             OnSendComplete(session);
         }
         else
-            PostOtherProcedures(session, transferred, (NetPacket*)overlapped);
+            PostOtherProcedures(session, transferred, reinterpret_cast<NetPacket*>(overlapped));
 
         OnWorkerThreadEnd();
     }

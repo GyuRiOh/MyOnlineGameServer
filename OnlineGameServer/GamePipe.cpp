@@ -6,12 +6,15 @@
 #include "../NetRoot/Common/Parser.h"
 #include "../TileAround.h"
 #include "../OnlineGameServer/GameServer.h"
+#include "../Monster_FSM_State.h"
 #include <fstream>
 #include <cassert>
 
 constexpr int MONSTER_GEN_MAX = 200;
 constexpr int MONSTER_DAMAGE = 10;
 constexpr int MONSTER_ATTACK_PROBABILITY = 3;
+
+std::vector<vector<BYTE>> map_(MAP_TILE_Y_MAX, vector<BYTE>(MAP_TILE_X_MAX, 0));
 
 MyNetwork::GamePipe::GamePipe(NetRoot* server, unsigned int framePerSecond, unsigned int threadNum) noexcept
 	: NetPipe(server, framePerSecond), framePerSec_(0), clientIDStamp_(1)
@@ -56,16 +59,12 @@ void MyNetwork::GamePipe::OnUserLeave(NetUser* user) noexcept
         player->GetHP());
 
     //캐릭터 정보 DB에 저장
-    DBSave(player, eGameDB, L"UPDATE gamedb.character SET posx = %f, posy = %f, tilex = %d, tiley = %d, rotation = %d, crystal = %d, hp = %d, exp = %d, die = %d WHERE accountno = %d",
+    DBSave(player, eGameDB, L"UPDATE gamedb.character SET posx = %f, posy = %f, tilex = %d, tiley = %d, rotation = %d WHERE accountno = %d",
         player->GetClientPosX(),
         player->GetClientPosY(),
         player->GetTileX(),
         player->GetTileY(),
         player->GetRotation(),
-        player->GetCrystal(),
-        player->GetHP(),
-        player->GetExp(),
-        player->isDead(),
         player->GetAccountNumber());
 
     //나 삭제요~ 패킷을 주위 9개 섹터에 전송
@@ -147,24 +146,6 @@ void MyNetwork::GamePipe::OnUserUpdate(NetUser* user) noexcept
 {
     PipePlayer* player = static_cast<PipePlayer*>(user);
     ULONGLONG nowTime = GetTickCount64();
-
-    //마지막 DB저장 시각이 3분 전이면
-    //현재의 데이터를 저장
-    if (player->GetLastDBSaveTime() < nowTime - 30000)
-    {
-        //캐릭터 정보 DB에 저장
-        DBSave(player, eGameDB, L"UPDATE gamedb.character SET posx = %f, posy = %f, tilex = %d, tiley = %d, rotation = %d, crystal = %d, hp = %d, exp = %d, die = %d WHERE accountno = %d",
-            player->GetClientPosX(),
-            player->GetClientPosY(),
-            player->GetTileX(),
-            player->GetTileY(),
-            player->GetRotation(),
-            player->GetCrystal(),
-            player->GetHP(),
-            player->GetExp(),
-            player->isDead(),
-            player->GetAccountNumber());
-    } 
 
     //플레이어가 죽었으면 나가기
     if (player->isDead())
@@ -786,20 +767,7 @@ void MyNetwork::GamePipe::MoveMonster() noexcept
             return;
         
         Monster* monster = static_cast<Monster*>(obj);
-
-        //이동 가능 범위 추리기
-        TileAround tileAround;
-        TileAround::GetTileAround(monster->GetTileX(), monster->GetTileY(), tileAround);
-
-        //해당 범위에서 벽에 해당하는 타일 제외
-        TilePos destPos = tileAround.around_[rand() % tileAround.count_];
-        while (map_[destPos.tileY][destPos.tileX] == 0)
-        {
-            destPos = tileAround.around_[rand() % tileAround.count_];
-        }
-
-        //타일 및 섹터 업데이트
-        monster->UpdateTileAndSector(destPos);
+        monster->context_->Move();
 
         //섹터가 바뀌었으면 패킷 보내기 위헤
         //움직인 몬스터 벡터에 삽입
@@ -829,7 +797,7 @@ void MyNetwork::GamePipe::MoveMonster() noexcept
 
         //몬스터 이동 패킷 보내기
         sectorMap_.ForeachSectorAround(monster->GetCurSector(),
-            [this, monster](PipePlayer*& player)
+            [this, monster](PipePlayer* player)
             {
                 proxy_->ResMoveMonster(
                     monster->GetClientID(),
@@ -842,8 +810,25 @@ void MyNetwork::GamePipe::MoveMonster() noexcept
 
 }
 
+MyNetwork::PipePlayer* MyNetwork::GamePipe::GetNearestPlayer(TilePos monsterPos)
+{
+    PipePlayer* res = nullptr;
+    SectorPos monsterSector;
+    monsterSector.SetSector(monsterPos.tileX, monsterPos.tileY);
+
+    sectorMap_.ForeachSectorAround(monsterSector, [this, &res](PipePlayer* player)
+        {
+            if(!res)
+                res = player;
+        });
+
+    return res;
+}
+
 void MyNetwork::GamePipe::InitializeMap() noexcept
 {
+
+
     //비트맵 파일 헤더, 이미지 헤더
     BITMAPFILEHEADER bf;
     BITMAPINFOHEADER bi;
@@ -953,68 +938,4 @@ void MyNetwork::GamePipe::RemoveMonsterAndCreateCrystal() noexcept
 
     }
 
-}
-
-
-MYSQL_ROW MyNetwork::GamePipe::GameDBQuery(const WCHAR* stringFormat, ...) noexcept
-{
-    WCHAR query[1024] = { 0 };
-
-    va_list va;
-    va_start(va, stringFormat);
-    HRESULT hResult = StringCchVPrintfW(query,
-        MAX_QUERY_LEN,
-        stringFormat,
-        va);
-    va_end(va);
-
-    if (FAILED(hResult))
-    {
-        MyNetwork::SystemLogger::GetInstance()->LogText(
-            L"GameDB-Query", MyNetwork::LEVEL_ERROR, L"Query Too Long... : %s", query);
-        MyNetwork::CrashDump::Crash();
-    }
-
-    MyNetwork::GameServer* server = static_cast<GameServer*>(GetRoot());
-    server->gameDBConnector_->Query(query);
-
-    return server->gameDBConnector_->FetchRow();
-
-}
-
-MYSQL_ROW MyNetwork::GamePipe::LogDBQuery(const WCHAR* stringFormat, ...) noexcept
-{
-    WCHAR query[1024] = { 0 };
-
-    va_list va;
-    va_start(va, stringFormat);
-    HRESULT hResult = StringCchVPrintfW(query,
-        MAX_QUERY_LEN,
-        stringFormat,
-        va);
-    va_end(va);
-
-    if (FAILED(hResult))
-    {
-        MyNetwork::SystemLogger::GetInstance()->LogText(
-            L"LogDB-Query", MyNetwork::LEVEL_ERROR, L"Query Too Long... : %s", query);
-        MyNetwork::CrashDump::Crash();
-    }
-
-    MyNetwork::GameServer* server = static_cast<GameServer*>(GetRoot());
-    server->logDBConnector_->Query(query);
-
-    return server->logDBConnector_->FetchRow();
-}
-
-void MyNetwork::GamePipe::GameDBFreeResult()
-{
-    GameServer* server = static_cast<GameServer*>(GetRoot());
-    server->gameDBConnector_->FreeResult();
-}
-
-void MyNetwork::GamePipe::LogDBFreeResult()
-{
-    GameServer* server = static_cast<GameServer*>(GetRoot());
-    server->logDBConnector_->FreeResult();
 }

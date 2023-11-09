@@ -113,7 +113,7 @@ namespace MyNetwork
 				WCHAR logTime[256] = { 0 };
 				GetDateTime(logTime);
 
-				server_->LogDBQuery(
+				server_->DBSave(player, eLogDB,
 					L"INSERT INTO gamelog values(NULL, '%s', %d, 'GameServer', %d, %d, %d, %d, %d, NULL, NULL)",
 					logTime,
 					player->GetAccountNumber(),
@@ -301,7 +301,7 @@ namespace MyNetwork
 				WCHAR logTime[256] = { 0 };
 				GetDateTime(logTime);
 
-				server_->LogDBQuery(
+				server_->DBSave(player, eLogDB,
 					L"INSERT INTO gamelog values(NULL, '%s', %d, 'GameServer', %d, %d, %d, %d, NULL, NULL, NULL)",
 					logTime,
 					player->GetAccountNumber(),

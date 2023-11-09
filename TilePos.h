@@ -53,6 +53,14 @@ struct TilePos
 		clientX = static_cast<float>(tileX / 2);
 		clientY = static_cast<float>(tileY / 2);
 	}
+
+	void UpdateCilentPosByTilePos(int tileX, int tileY)
+	{
+		this->tileX = tileX;
+		this->tileY = tileY;
+		clientX = static_cast<float>(tileX / 2);
+		clientY = static_cast<float>(tileY / 2);
+	}
 };
 
 #endif

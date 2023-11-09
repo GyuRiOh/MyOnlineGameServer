@@ -10,7 +10,6 @@
 namespace MyNetwork
 {
 	union NetSessionID;
-	
 	class NetRoot;
 	class NetUser;
 

@@ -13,7 +13,7 @@ public:
 	explicit SectorMap() {}
 	~SectorMap() {}
 
-	void AddTo(INT64 clientID, SectorPos sector, Object& object)
+	void AddTo(INT64 clientID, SectorPos sector, Object object)
 	{
 		sectorMap_[sector.yPos_][sector.xPos_].emplace(clientID, object);
 	}

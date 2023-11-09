@@ -42,11 +42,8 @@ namespace MyNetwork
 		void RestartGame(PipePlayer* player) noexcept;
 		void AttackPlayer() noexcept;
 		void DBSave(PipePlayer* player, BYTE dbType, const WCHAR* stringFormat, ...) noexcept;
-		MYSQL_ROW GameDBQuery(const WCHAR* stringFormat, ...) noexcept;
-		MYSQL_ROW LogDBQuery(const WCHAR* stringFormat, ...) noexcept;
-		void GameDBFreeResult();
-		void LogDBFreeResult();
 
+		PipePlayer* GetNearestPlayer(TilePos monsterPos);
 	private:
 		void GenerateNewMonster() noexcept;
 		void MoveMonster() noexcept;
@@ -61,7 +58,6 @@ namespace MyNetwork
 		void RemoveOtherCharacterFromOldSectorForSpecificPlayer(PipePlayer* player) noexcept;
 
 	public:
-		BYTE map_[MAP_TILE_Y_MAX][MAP_TILE_X_MAX] = { 0 };
 		ObjectManager objectManager_;
 		SectorMap<PipePlayer*> sectorMap_;
 
@@ -71,4 +67,8 @@ namespace MyNetwork
 		UINT64 clientIDStamp_;
 
 	};
+
+	const std::vector<vector<unsigned char>>& GetMap();
+	const GamePipe* GetGamePipe();
+
 }

@@ -3,6 +3,7 @@
 #define __NET__SESSION__
 
 #define _CRT_SECURE_NO_WARNINGS
+
 #pragma comment(lib, "ws2_32")
 #pragma comment(lib, "Winmm.lib")
 #include <WinSock2.h>
@@ -15,6 +16,7 @@
 #include "../Common/Queue.h"
 #include "NetEnums.h"
 #include "../Common/SwapQueue.h"
+
 
 using namespace std;
 

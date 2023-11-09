@@ -1,5 +1,7 @@
 #pragma once
+
 #include "BaseObject.h"
+#include "../Monster_FSM_State.h"
 
 class Monster final : public BaseObject
 {
@@ -16,7 +18,14 @@ public:
 	USHORT GetRotation() const noexcept { return rotation_; }
 
 	bool isZeroHP() { return (HP_ <= 0); }
+
+public:
+	MonsterContext* context_;
+
 private:
 	int HP_;
 	USHORT rotation_;
 };
+
+
+

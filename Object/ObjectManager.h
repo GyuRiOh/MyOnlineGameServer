@@ -7,9 +7,8 @@
 #include "../NetRoot/Common/Singleton.h"
 #include "../Sector/SectorMap.h"
 #include "BaseObject.h"
-#include "Player.h"
-#include "Monster.h"
 #include "Crystal.h"
+#include "Monster.h"
 
 class ObjectManager final
 {
