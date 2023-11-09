@@ -11,8 +11,9 @@
 //
 /////////////////////////////////////////////////////////
 
-#include <mysql.h>
 #pragma comment (lib, "libmysql.lib")
+#include <winsock2.h>
+#include <mysql.h>
 #define MAX_INFO_COUNT 3000
 
 namespace MyNetwork

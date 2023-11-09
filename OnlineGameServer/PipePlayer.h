@@ -36,6 +36,7 @@ namespace MyNetwork
 		float GetClientPosY() const noexcept { return tilePos_.clientY; }
 		int GetTileX() const noexcept { return tilePos_.tileX; }
 		int GetTileY() const noexcept { return tilePos_.tileY; }
+		TilePos GetTile() const noexcept { return tilePos_; }
 		INT64 GetExp() const noexcept { return exp_; }
 		USHORT GetLevel() const noexcept { return level_; }
 		ULONGLONG GetSittingTimeSec() const noexcept { return sittingTime_ / 1000; }

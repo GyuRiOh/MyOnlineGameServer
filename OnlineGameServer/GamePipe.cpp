@@ -14,10 +14,9 @@ constexpr int MONSTER_GEN_MAX = 200;
 constexpr int MONSTER_DAMAGE = 10;
 constexpr int MONSTER_ATTACK_PROBABILITY = 3;
 
-std::vector<vector<BYTE>> map_(MAP_TILE_Y_MAX, vector<BYTE>(MAP_TILE_X_MAX, 0));
 
 MyNetwork::GamePipe::GamePipe(NetRoot* server, unsigned int framePerSecond, unsigned int threadNum) noexcept
-	: NetPipe(server, framePerSecond), framePerSec_(0), clientIDStamp_(1)
+	: NetPipe(server, framePerSecond), framePerSec_(0), clientIDStamp_(1), map_(MAP_TILE_Y_MAX, vector<BYTE>(MAP_TILE_X_MAX, 0))
 {
     RegisterPipeStub(new GamePipe_CS_Stub(this));
 	proxy_ = new GamePipe_SC_Proxy(this);
@@ -261,6 +260,11 @@ void MyNetwork::GamePipe::GetSessionIDSet_AroundSector_WithoutID(NetSessionID ex
                set->Enqueue(player->GetSessionID());
         }
     }
+}
+
+const std::vector<vector<unsigned char>>& MyNetwork::GamePipe::GetMap()
+{
+    return map_;
 }
 
 void MyNetwork::GamePipe::UpdateSector(PipePlayer* player) noexcept
@@ -767,7 +771,7 @@ void MyNetwork::GamePipe::MoveMonster() noexcept
             return;
         
         Monster* monster = static_cast<Monster*>(obj);
-        monster->context_->Move();
+        monster->Move();
 
         //섹터가 바뀌었으면 패킷 보내기 위헤
         //움직인 몬스터 벡터에 삽입
@@ -939,3 +943,4 @@ void MyNetwork::GamePipe::RemoveMonsterAndCreateCrystal() noexcept
     }
 
 }
+

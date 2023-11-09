@@ -7,7 +7,6 @@
 #include "../OnlineGameServer/PipePlayer.h"
 #include "../NetRoot/Common/Queue.h"
 #include "../CommonProtocol.h"
-#include "../NetRoot/Common/DBConnector.h"
 #include <thread>
 
 namespace MyNetwork
@@ -35,6 +34,7 @@ namespace MyNetwork
 		void GetSessionIDSet_AroundSector(SectorPos sector, NetSessionIDSet* const set) noexcept;
 		void GetSessionIDSet_AroundSector_WithoutID(NetSessionID exceptionID, SectorPos sector, NetSessionIDSet* const set) noexcept;
 		UINT64 GetClientIDStamp() noexcept { return (clientIDStamp_++); }
+		const std::vector<vector<unsigned char>>& GetMap();
 
 		void UpdateSector(PipePlayer* player) noexcept ;
 		void UpdateSector(BaseObject* object) noexcept;
@@ -58,6 +58,7 @@ namespace MyNetwork
 		void RemoveOtherCharacterFromOldSectorForSpecificPlayer(PipePlayer* player) noexcept;
 
 	public:
+		std::vector<vector<BYTE>> map_;
 		ObjectManager objectManager_;
 		SectorMap<PipePlayer*> sectorMap_;
 
@@ -68,7 +69,5 @@ namespace MyNetwork
 
 	};
 
-	const std::vector<vector<unsigned char>>& GetMap();
-	const GamePipe* GetGamePipe();
 
 }

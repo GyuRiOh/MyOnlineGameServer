@@ -2,6 +2,7 @@
 #include "../NetRoot/Common/PDHMonitor.h"
 #include "../NetRoot/Common/Parser.h"
 #include "../CommonProtocol.h"
+#include "../NetRoot/Common/DBConnector.h"
 
 MyNetwork::GameServer::GameServer() noexcept : 
     authPipe_(nullptr), gamePipe_(nullptr), logDBConnector_(nullptr), accountDBConnector_(nullptr),

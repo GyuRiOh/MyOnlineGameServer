@@ -5,7 +5,6 @@
 #include "../NetRoot/NetServer/PipeManager.h"
 #include "GameClient.h"
 #include "../DBSaveJob.h"
-#include "../NetRoot/Common/DBConnector.h"
 #include "../NetRoot/Common/LockFreeEnqQueue.h"
 
 namespace MyNetwork

@@ -3,6 +3,9 @@
 #include "BaseObject.h"
 #include "../Monster_FSM_State.h"
 
+
+class GamePipe;
+
 class Monster final : public BaseObject
 {
 public:
@@ -16,13 +19,13 @@ public:
 	void OnUpdate() noexcept override;
 	void GetDamaged(int damage) noexcept;
 	USHORT GetRotation() const noexcept { return rotation_; }
-
 	bool isZeroHP() { return (HP_ <= 0); }
 
-public:
-	MonsterContext* context_;
+	void Move(GamePipe* pipe);
 
 private:
+	MyNetwork::MonsterContext context_;
+
 	int HP_;
 	USHORT rotation_;
 };

@@ -3,11 +3,15 @@
 #include "OnlineGameServer/PipePlayer.h"
 #include "OnlineGameServer/GamePipe.h"
 #include "TileAround.h"
+#include "Object/Monster.h"
 
 using namespace MyNetwork;
 
-class IdleState;
-class ChasingState;
+enum StateCode
+{
+	eIDLE_STATE,
+	eCHASING_STATE
+};
 
 class State
 {
@@ -24,7 +28,7 @@ protected:
 class IdleState : public State
 {
 public:
-	IdleState(Monster* monster, MyNetwork::GamePipe* pipe) : State(monster, pipe) {}
+	IdleState(::Monster* monster, MyNetwork::GamePipe* pipe) : State(monster, pipe) {}
 
 	virtual void OnMove(MyNetwork::MonsterContext* context) override
 	{
@@ -34,10 +38,8 @@ public:
 		PipePlayer* player = originalPipe_->GetNearestPlayer(monster_->GetTile());
 		if (player)
 		{
-			ChasingState* state = reinterpret_cast<ChasingState*>(SizedMemoryPool::GetInstance()->Alloc(sizeof(ChasingState)));
-			new (state) ChasingState(monster_, originalPipe_, player);
-			state->OnMove(context);
-			context->ChangeState(state);
+			context->ChangeState(eCHASING_STATE, player);
+			context->Move(originalPipe_);
 			return;
 		}
 
@@ -51,7 +53,7 @@ public:
 
 		//해당 범위에서 벽에 해당하는 타일 제외
 		TilePos destPos = tileAround.around_[rand() % tileAround.count_];
-		while (GetMap()[destPos.tileY][destPos.tileX] == 0)
+		while (originalPipe_->GetMap()[destPos.tileY][destPos.tileX] == 0)
 		{
 			destPos = tileAround.around_[rand() % tileAround.count_];
 		}
@@ -72,10 +74,8 @@ public:
 		//기본 상태로 전이
 		if (player_->isFatal() || player_->GetClientID() != clientID_)
 		{
-			IdleState* state = reinterpret_cast<IdleState*>(SizedMemoryPool::GetInstance()->Alloc(sizeof(IdleState)));
-			new (state) IdleState(monster_, originalPipe_);
-			state->OnMove(context);
-			context->ChangeState(state);
+			context->ChangeState(eIDLE_STATE, nullptr);
+			context->Move(originalPipe_);
 			return;
 		}
 
@@ -128,21 +128,53 @@ private:
 	INT64 clientID_;
 };
 
-MyNetwork::MonsterContext::MonsterContext(Monster* monster, GamePipe* pipe) : monster_(monster), originalPipe_(pipe)
+MyNetwork::MonsterContext::MonsterContext(Monster* monster) : monster_(monster), originalPipe_(nullptr), currentState_(nullptr){}
+
+MyNetwork::MonsterContext::MonsterContext(Monster* monster, MyNetwork::GamePipe* pipe) : monster_(monster), originalPipe_(pipe)
 {
 	IdleState* state = reinterpret_cast<IdleState*>(SizedMemoryPool::GetInstance()->Alloc(sizeof(IdleState)));
 	new (state) IdleState(monster, pipe);
 	currentState_ = state;
 }
 
+void MyNetwork::MonsterContext::Initialize(GamePipe* pipe)
+{
+	originalPipe_ = pipe;
+	IdleState* state = reinterpret_cast<IdleState*>(SizedMemoryPool::GetInstance()->Alloc(sizeof(IdleState)));
+	new (state) IdleState(monster_, originalPipe_);
+	currentState_ = state;
+}
 
-void MyNetwork::MonsterContext::ChangeState(State* newState)
+
+void MyNetwork::MonsterContext::ChangeState(int stateCode, PipePlayer* player)
 {
 	SizedMemoryPool::GetInstance()->Free(currentState_);
+	State* newState = nullptr;
+
+	switch (stateCode)
+	{
+	case eIDLE_STATE:
+	{
+		newState = reinterpret_cast<IdleState*>(SizedMemoryPool::GetInstance()->Alloc(sizeof(IdleState)));
+		new (newState) IdleState(monster_, originalPipe_);
+		break;
+	}
+	case eCHASING_STATE:
+	{
+		newState = reinterpret_cast<ChasingState*>(SizedMemoryPool::GetInstance()->Alloc(sizeof(ChasingState)));
+		new (newState) ChasingState(monster_, originalPipe_, player);
+		break;
+	}
+
+	default:
+		break;
+	}
+
 	currentState_ = newState;
 }
 
-void MyNetwork::MonsterContext::Move()
+void MyNetwork::MonsterContext::Move(GamePipe* pipe)
 {
+	originalPipe_ = pipe;
 	currentState_->OnMove(this);
 }

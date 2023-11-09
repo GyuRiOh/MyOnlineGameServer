@@ -9,6 +9,9 @@
 #include "../DBSaveJob.h"
 #include "GameServer.h"
 
+constexpr int AttackDistance1 = 5;
+constexpr int AttackDistance2 = 10;
+
 namespace MyNetwork
 {
 	class GamePipe_CS_Stub final : public NetStub
@@ -171,9 +174,9 @@ namespace MyNetwork
 
 			//맞은 이가 있는지 주변을 탐색
 			//섹터 9개 전체에 데미지 들어가게 해보자
-			server_->objectManager_.ForeachSector(
+			server_->objectManager_.ForeachSectorAround(
 				player->GetCurSector(),
-				[&damagedMonster](BaseObject* obj)
+				[&player, &damagedMonster](BaseObject* obj)
 				{
 					if (obj->GetType() == eMONSTER_TYPE)
 					{	
@@ -182,8 +185,27 @@ namespace MyNetwork
 						if (monster->isZeroHP())
 							return;
 
-						monster->GetDamaged(5);
-						damagedMonster.emplace_back(monster);
+						//몬스터 벡터 크기 구하기
+						double mVec = monster->GetTile().GetVectorSize();
+
+						if (mVec < AttackDistance1)
+							return;
+
+						//플레이어 벡터 크기 구하기
+						double pVec = player->GetTile().GetVectorSize();
+
+						//두 벡터간의 내적 구하기
+						double inner = TilePos::GetInnerProduct(player->GetTile(), monster->GetTile());
+
+						//두 벡터간의 각도 구하기
+						double theta = acos(inner / (pVec * mVec));
+
+
+						if (theta >= player->GetRotation() - 30 && theta <= player->GetRotation() + 30)
+						{
+							monster->GetDamaged(5);
+							damagedMonster.emplace_back(monster);
+						}
 					}
 				}
 			);
@@ -218,10 +240,9 @@ namespace MyNetwork
 			std::vector<Monster*> damagedMonster;
 
 			//맞은 이가 있는지 주변을 탐색
-			//섹터 9개 전체에 데미지 들어가게 해보자
 			server_->objectManager_.ForeachSectorAround(
 				player->GetCurSector(),
-				[&damagedMonster](BaseObject* obj)
+				[&player, &damagedMonster](BaseObject* obj)
 				{
 					if (obj->GetType() == eMONSTER_TYPE)
 					{
@@ -230,8 +251,27 @@ namespace MyNetwork
 						if (monster->isZeroHP())
 							return;
 
-						monster->GetDamaged(20);
-						damagedMonster.emplace_back(monster);
+						//몬스터 벡터 크기 구하기
+						double mVec = monster->GetTile().GetVectorSize();
+
+						if (mVec < AttackDistance2)
+							return;
+
+						//플레이어 벡터 크기 구하기
+						double pVec = player->GetTile().GetVectorSize();
+
+						//두 벡터간의 내적 구하기
+						double inner = TilePos::GetInnerProduct(player->GetTile(), monster->GetTile());
+
+						//두 벡터간의 각도 구하기
+						double theta = acos(inner / (pVec * mVec));
+
+
+						if (theta >= player->GetRotation() - 30 && theta <= player->GetRotation() + 30)
+						{
+							monster->GetDamaged(5);
+							damagedMonster.emplace_back(monster);
+						}
 					}
 				}
 			);

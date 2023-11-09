@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../NetRoot/NetServer/NetPipe.h"
-#include "../NetRoot/Common/DBConnector.h"
 #include "UserMap.h"
+#include "../NetRoot/Common/DBConnector.h"
 #include <cpp_redis/cpp_redis>
 
 namespace MyNetwork
