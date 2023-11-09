@@ -201,7 +201,7 @@ namespace MyNetwork
 						double theta = acos(inner / (pVec * mVec));
 
 
-						if (theta >= player->GetRotation() - 30 && theta <= player->GetRotation() + 30)
+						if (theta >= 0 && theta <= 60)
 						{
 							monster->GetDamaged(5);
 							damagedMonster.emplace_back(monster);
@@ -267,7 +267,7 @@ namespace MyNetwork
 						double theta = acos(inner / (pVec * mVec));
 
 
-						if (theta >= player->GetRotation() - 30 && theta <= player->GetRotation() + 30)
+						if (theta >= 0 && theta <= 60)
 						{
 							monster->GetDamaged(5);
 							damagedMonster.emplace_back(monster);
