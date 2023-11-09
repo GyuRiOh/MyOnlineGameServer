@@ -30,7 +30,7 @@ void Monster::GetDamaged(int damage) noexcept
 	HP_ -= damage;
 }
 
-void Monster::Move(GamePipe* pipe)
+void Monster::Move(MyNetwork::GamePipe* pipe)
 {
 	context_.Move(pipe);
 }

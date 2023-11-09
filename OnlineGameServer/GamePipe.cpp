@@ -771,7 +771,7 @@ void MyNetwork::GamePipe::MoveMonster() noexcept
             return;
         
         Monster* monster = static_cast<Monster*>(obj);
-        monster->Move();
+        monster->Move(this);
 
         //섹터가 바뀌었으면 패킷 보내기 위헤
         //움직인 몬스터 벡터에 삽입

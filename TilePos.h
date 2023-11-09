@@ -62,9 +62,9 @@ struct TilePos
 		clientY = static_cast<float>(tileY / 2);
 	}
 
-	double GetVectorSize()
+	double GetDistance(TilePos other)
 	{
-		return sqrt(pow(tileX, 2) + pow(tileY, 2));
+		return sqrt(pow(tileX-other.tileX, 2) + pow(tileY-other.tileY, 2));
 	}
 
 	static int GetInnerProduct(TilePos pos1, TilePos pos2)
